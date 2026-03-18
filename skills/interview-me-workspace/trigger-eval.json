@@ -1,0 +1,86 @@
+[
+  {
+    "query": "interview me about this spec i wrote for our new notification system. it's at docs/specs/notifications-v2.md — i think it's mostly done but i want to make sure i haven't missed anything before we start building",
+    "should_trigger": true
+  },
+  {
+    "query": "i have this idea for a saas tool that helps small restaurants manage their inventory and supplier orders. it's pretty half-baked still — can you ask me a bunch of questions to help me figure out what i actually want to build?",
+    "should_trigger": true
+  },
+  {
+    "query": "ok so i just wrote up this RFC for migrating our auth from session-based to JWT tokens. before i send it to the team can you poke holes in it and ask me about the parts that seem underspecified? the file is at rfcs/003-jwt-migration.md",
+    "should_trigger": true
+  },
+  {
+    "query": "help me think through the data model for this multi-tenant app we're building. each tenant needs isolated data but we also want cross-tenant analytics for our internal dashboard. i haven't written anything down yet, just thinking out loud",
+    "should_trigger": true
+  },
+  {
+    "query": "what am i missing about this deployment strategy? we're planning to do blue-green deploys with a 10 minute bake time, rollback on error rate > 2%, and use feature flags for gradual rollout. seems straightforward but i feel like there are gotchas",
+    "should_trigger": true
+  },
+  {
+    "query": "flesh this out for me — i want to add a caching layer between our API gateway and the backend services. thinking redis, 5 min TTL, cache-aside pattern. the API handles about 50k req/min at peak. what questions should i be answering before implementing this?",
+    "should_trigger": true
+  },
+  {
+    "query": "i need to figure out the right approach for handling file uploads in our app. users upload PDFs (up to 50mb), we process them with OCR, then store the extracted text. ask me about the parts i haven't thought through yet",
+    "should_trigger": true
+  },
+  {
+    "query": "we're about to start building a plugin system for our electron app. i wrote some notes in DESIGN.md but it's pretty rough. can you interview me about the design so we can tighten it up before sprint planning?",
+    "should_trigger": true
+  },
+  {
+    "query": "/interview-me space/projects/plugins/meta/skills/expert-creation/SKILL.md",
+    "should_trigger": true
+  },
+  {
+    "query": "i'm designing a webhook delivery system that needs to handle retries, deduplication, and ordering guarantees. i know what i want at a high level but the edge cases are fuzzy. grill me on the details",
+    "should_trigger": true
+  },
+  {
+    "query": "can you review this pull request? it adds pagination to the /users endpoint and refactors the query builder. PR is at #247",
+    "should_trigger": false
+  },
+  {
+    "query": "i need to prep for a system design interview at google next week. can you run me through some practice questions? i'm expecting distributed systems stuff",
+    "should_trigger": false
+  },
+  {
+    "query": "write me a set of behavioral interview questions for a senior engineering manager role. we want to assess technical leadership, conflict resolution, and cross-team collaboration",
+    "should_trigger": false
+  },
+  {
+    "query": "research the current state of WebAssembly support in edge computing platforms — cloudflare workers, deno deploy, fastly compute. i want a comparison of their WASM runtimes and limitations",
+    "should_trigger": false
+  },
+  {
+    "query": "just brainstorm some ideas for features we could add to our developer portal. we have docs, an API playground, and a changelog. what else would make it great?",
+    "should_trigger": false
+  },
+  {
+    "query": "help me debug this — our postgres queries are timing out intermittently. it started after we deployed the new search feature yesterday. here's the slow query log output",
+    "should_trigger": false
+  },
+  {
+    "query": "can you write a spec for adding dark mode to our dashboard? we use tailwind and have a design system with light tokens already defined. just draft something reasonable",
+    "should_trigger": false
+  },
+  {
+    "query": "i need to create a survey for our users to understand how they use the export feature. can you draft 10-15 questions covering frequency of use, preferred formats, and pain points?",
+    "should_trigger": false
+  },
+  {
+    "query": "give me your opinion on whether we should use graphql or rest for our new mobile API. our team is 4 backend devs, none have graphql experience, and we need to ship in 6 weeks",
+    "should_trigger": false
+  },
+  {
+    "query": "grill me to understand what you need to perform this objective.",
+    "should_trigger": true
+  },
+  {
+    "query": "ask questions if there are any gaps in your understanding of goals or intent",
+    "should_trigger": true
+  }
+]

@@ -1,0 +1,40 @@
+{
+  "expectations": [
+    {
+      "text": "Questions target specific gaps in the spec rather than topics the spec already covers well",
+      "passed": true,
+      "evidence": "Analysis explicitly categorizes gaps into three themes (runtime assumptions, quality consistency, lifecycle) and each question probes one. E.g., Q1 targets the unstated Agent tool dependency, Q4 targets recursion risk in Phase 3 follow-up. No question asks about things the spec already covers (like the four-phase workflow or report templates)."
+    },
+    {
+      "text": "Questions reference concrete details from the spec (specific phases, mechanisms, or language)",
+      "passed": true,
+      "evidence": "Q3 quotes 'spawn specialists in a single turn so they run in parallel'. Q4 references 'targeted follow-up search yourself during Phase 3'. Q7 quotes 'pick the 2-3 most promising results'. Nearly every question references specific spec language."
+    },
+    {
+      "text": "Strategy explicitly plans to use AskUserQuestion one at a time",
+      "passed": true,
+      "evidence": "Every question has 'Would use AskUserQuestion: Yes' noted. The approach summary describes questions asked one at a time."
+    },
+    {
+      "text": "At least one question reveals a non-obvious tension or tradeoff (not just 'have you thought about X')",
+      "passed": true,
+      "evidence": "Q4 reveals a recursion risk: 'The synthesis phase can trigger more research, which could trigger more synthesis. Without a bound, this could loop.' Q5 identifies a practical constraint: deep research may exceed context window. These are tensions within the spec's own design, not generic concerns."
+    },
+    {
+      "text": "Strategy describes adapting follow-up questions based on user answers",
+      "passed": true,
+      "evidence": "The task summary notes 'an adaptive interview strategy that branches based on the author's answers, with specific pivot points identified.'"
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1.0
+  },
+  "timing": {
+    "total_tokens": 17977,
+    "duration_ms": 95052,
+    "total_duration_seconds": 95.1
+  }
+}

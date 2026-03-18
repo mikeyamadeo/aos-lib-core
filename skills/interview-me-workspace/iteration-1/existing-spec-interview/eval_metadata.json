@@ -1,0 +1,12 @@
+{
+  "eval_id": 0,
+  "eval_name": "existing-spec-interview",
+  "prompt": "Interview me about this spec: /Users/mikey/boost-os/plugins/src/core/skills/research/SKILL.md",
+  "assertions": [
+    "Questions target specific gaps in the spec rather than topics the spec already covers well",
+    "Questions reference concrete details from the spec (specific phases, mechanisms, or language)",
+    "Strategy explicitly plans to use AskUserQuestion one at a time",
+    "At least one question reveals a non-obvious tension or tradeoff (not just 'have you thought about X')",
+    "Strategy describes adapting follow-up questions based on user answers"
+  ]
+}

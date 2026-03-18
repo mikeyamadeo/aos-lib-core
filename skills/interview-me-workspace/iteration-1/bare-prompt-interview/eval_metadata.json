@@ -1,0 +1,12 @@
+{
+  "eval_id": 1,
+  "eval_name": "bare-prompt-interview",
+  "prompt": "Interview me about a CLI tool I'm building for managing dotfiles across multiple machines. It should handle syncing configs between my work laptop and personal desktop, support private and public configs, and work with both macOS and Linux.",
+  "assertions": [
+    "Questions target specific gaps in the prompt rather than restating what was already said",
+    "Questions use concrete scenarios rather than abstract inquiries (e.g. specific conflict situations, not just 'how do you handle conflicts')",
+    "Strategy explicitly plans to use AskUserQuestion one at a time",
+    "At least one question probes an intersection or tension between stated requirements (e.g. private/public vs work/personal)",
+    "Strategy describes adapting follow-up questions based on user answers"
+  ]
+}

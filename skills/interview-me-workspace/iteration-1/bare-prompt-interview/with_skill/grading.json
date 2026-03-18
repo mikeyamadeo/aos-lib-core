@@ -1,0 +1,40 @@
+{
+  "expectations": [
+    {
+      "text": "Questions target specific gaps in the prompt rather than restating what was already said",
+      "passed": true,
+      "evidence": "Lists 12 missing items systematically. Questions probe gaps: sync mechanism (undefined), conflict resolution (unaddressed), meaning of private/public (ambiguous), why not existing tools (unstated). No question restates the four stated requirements."
+    },
+    {
+      "text": "Questions use concrete scenarios rather than abstract inquiries (e.g. specific conflict situations, not just 'how do you handle conflicts')",
+      "passed": true,
+      "evidence": "Q2: 'Say you tweak your .zshrc on your work laptop Monday morning, and that evening you also tweak it on your desktop without syncing first. When you next sync, what should happen?' Q6: 'if your .zshrc sources a Homebrew init on macOS but not on Linux.' Highly scenario-driven."
+    },
+    {
+      "text": "Strategy explicitly plans to use AskUserQuestion one at a time",
+      "passed": true,
+      "evidence": "Every question states 'Would use AskUserQuestion: Yes.' The approach describes one-at-a-time delivery."
+    },
+    {
+      "text": "At least one question probes an intersection or tension between stated requirements (e.g. private/public vs work/personal)",
+      "passed": true,
+      "evidence": "Q7 explicitly probes the intersection: 'Is the split purely by machine... Or are there configs you want on both machines?' and 'on the work side, are there any corporate policies about what tools you can use or where company configs can be stored?' This intersects private/public with work/personal."
+    },
+    {
+      "text": "Strategy describes adapting follow-up questions based on user answers",
+      "passed": true,
+      "evidence": "Includes explicit 'Follow-Up Questions' section with 5 questions 'held in reserve, deploying them based on what the first 8 answers reveal.' E.g., 'Secret management specifics' is conditional on Q3 answer, 'Templating depth' conditional on Q6."
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1.0
+  },
+  "timing": {
+    "total_tokens": 14822,
+    "duration_ms": 100070,
+    "total_duration_seconds": 100.1
+  }
+}

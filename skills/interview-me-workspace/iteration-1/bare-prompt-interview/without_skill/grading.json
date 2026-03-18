@@ -1,0 +1,40 @@
+{
+  "expectations": [
+    {
+      "text": "Questions target specific gaps in the prompt rather than restating what was already said",
+      "passed": true,
+      "evidence": "Identifies key unknowns (sync mechanism, secret protection, config granularity, existing workflow, audience). Questions probe these gaps rather than restating stated requirements."
+    },
+    {
+      "text": "Questions use concrete scenarios rather than abstract inquiries (e.g. specific conflict situations, not just 'how do you handle conflicts')",
+      "passed": false,
+      "evidence": "Most questions are abstract: Q1 'What is your current dotfile workflow, and what specifically is breaking or painful about it?' Q2 'What is the sync/transport mechanism you have in mind?' Q8 'What is your preferred language/runtime for the CLI?' These are valid but generic. Only Q4 approaches a concrete scenario: 'When there is a conflict -- say you changed .zshrc on both machines before syncing -- what should happen?' Compared to the with-skill version which paints vivid scenarios, this is significantly more abstract."
+    },
+    {
+      "text": "Strategy explicitly plans to use AskUserQuestion one at a time",
+      "passed": false,
+      "evidence": "No mention of AskUserQuestion. Questions are presented as a numbered list without specifying the interaction mechanism."
+    },
+    {
+      "text": "At least one question probes an intersection or tension between stated requirements (e.g. private/public vs work/personal)",
+      "passed": false,
+      "evidence": "No question explicitly intersects requirements. Q3 asks about private/public and Q7 asks about audience, but neither probes how these dimensions interact with each other or create tensions."
+    },
+    {
+      "text": "Strategy describes adapting follow-up questions based on user answers",
+      "passed": true,
+      "evidence": "The approach summary mentions 'an adaptive follow-up plan based on possible answers (e.g., git-backed leads to repo structure questions; value-level secrets leads to encryption tooling questions).'"
+    }
+  ],
+  "summary": {
+    "passed": 2,
+    "failed": 3,
+    "total": 5,
+    "pass_rate": 0.4
+  },
+  "timing": {
+    "total_tokens": 11731,
+    "duration_ms": 73899,
+    "total_duration_seconds": 73.9
+  }
+}

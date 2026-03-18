@@ -1,0 +1,40 @@
+{
+  "expectations": [
+    {
+      "text": "Questions target specific gaps in the spec rather than topics the spec already covers well",
+      "passed": true,
+      "evidence": "Questions target ambiguities: scope boundary (Q1), clarification heuristics (Q2), iteration model (Q3), agent constraints (Q4). The analysis section identifies 5 specific areas of ambiguity. However, some questions are slightly more surface-level (Q5 about user override of depth, Q8 about output directory purpose)."
+    },
+    {
+      "text": "Questions reference concrete details from the spec (specific phases, mechanisms, or language)",
+      "passed": true,
+      "evidence": "Q1 references the description's broad trigger language. Q4 references 'Agent tool' and parallel spawning. Q6 quotes 'pick the 2-3 most promising results'. Good spec-specific grounding."
+    },
+    {
+      "text": "Strategy explicitly plans to use AskUserQuestion one at a time",
+      "passed": false,
+      "evidence": "No mention of AskUserQuestion anywhere in the output. The questions are listed as a batch without specifying the interaction mechanism."
+    },
+    {
+      "text": "At least one question reveals a non-obvious tension or tradeoff (not just 'have you thought about X')",
+      "passed": true,
+      "evidence": "Q1 reveals the tension between broad triggering ('even if they don't say research explicitly') and user annoyance when a heavyweight pipeline fires for a quick question. Q3 about iteration vs one-shot is a real design fork."
+    },
+    {
+      "text": "Strategy describes adapting follow-up questions based on user answers",
+      "passed": true,
+      "evidence": "The approach summary describes an 'outside-in' strategy with three arcs, and notes questions progress from user-facing to implementation concerns, implying adaptation. However, it's less explicit about branching based on specific answers than the with-skill version."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 1,
+    "total": 5,
+    "pass_rate": 0.8
+  },
+  "timing": {
+    "total_tokens": 16257,
+    "duration_ms": 86697,
+    "total_duration_seconds": 86.7
+  }
+}

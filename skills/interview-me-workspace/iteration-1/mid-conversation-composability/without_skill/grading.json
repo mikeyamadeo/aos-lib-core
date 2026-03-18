@@ -1,0 +1,40 @@
+{
+  "expectations": [
+    {
+      "text": "Questions target specific gaps rather than restating the four stated requirements",
+      "passed": true,
+      "evidence": "Identifies 10 specific gaps ordered by rework risk. Questions target plugin contracts, UI extension meaning in CLI context, data source standardization, security, namespace collisions, state persistence, distribution, composability — all absent from user's statement. Notably, explored the codebase and discovered the existing plugin system, making questions very contextual."
+    },
+    {
+      "text": "Questions use concrete failure scenarios or edge cases rather than abstract inquiries",
+      "passed": true,
+      "evidence": "Q4 references specific codebase details: 'A third-party plugin can include arbitrary Python scripts... What's your plan for preventing a malicious or buggy plugin from reading your brain/ directory, exfiltrating API keys?' Q5 describes a concrete collision scenario: 'a research skill from core and a research skill from a third-party analytics plugin.' References actual files (justfile, marketplace.json)."
+    },
+    {
+      "text": "Strategy explicitly plans to use AskUserQuestion one at a time",
+      "passed": false,
+      "evidence": "No mention of AskUserQuestion anywhere. Questions are presented as a numbered list without specifying the interaction mechanism."
+    },
+    {
+      "text": "At least one question surfaces a non-obvious architectural concern (beyond obvious security/sandboxing)",
+      "passed": true,
+      "evidence": "Q5 about skill trigger description collisions is a non-obvious concern specific to the existing NLP-based triggering architecture. Q8 about composability explicitly references the interview-me skill's own design pattern. Q6 about state persistence across sessions is subtle but important."
+    },
+    {
+      "text": "Strategy includes a mid-interview checkpoint or summary to redirect the conversation",
+      "passed": false,
+      "evidence": "No checkpoint or mid-interview summary is included. The 8 questions are presented as a linear sequence without any pause point to redirect based on accumulated answers."
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "failed": 2,
+    "total": 5,
+    "pass_rate": 0.6
+  },
+  "timing": {
+    "total_tokens": 28180,
+    "duration_ms": 128363,
+    "total_duration_seconds": 128.4
+  }
+}

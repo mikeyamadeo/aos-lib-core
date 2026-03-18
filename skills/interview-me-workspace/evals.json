@@ -1,0 +1,23 @@
+{
+  "skill_name": "interview-me",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Interview me about this spec: /Users/mikey/boost-os/plugins/src/core/skills/research/SKILL.md",
+      "expected_output": "Should read the research skill spec, identify gaps/assumptions, and ask probing non-obvious questions one at a time via AskUserQuestion",
+      "files": ["/Users/mikey/boost-os/plugins/src/core/skills/research/SKILL.md"]
+    },
+    {
+      "id": 1,
+      "prompt": "Interview me about a CLI tool I'm building for managing dotfiles across multiple machines. It should handle syncing configs between my work laptop and personal desktop, support private and public configs, and work with both macOS and Linux.",
+      "expected_output": "Should identify underspecified areas in this loose idea and ask deep questions about conflict resolution, secret management, machine-specific overrides, etc.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I've been thinking about adding a plugin system to my app. Plugins would be loaded at runtime and could extend the UI and add new data sources. I want third-party developers to be able to create plugins too. Interview me about this — what am I not thinking about?",
+      "expected_output": "Should treat the conversation context as input, identify the hardest parts of a plugin system (sandboxing, versioning, API stability, discovery), and probe accordingly",
+      "files": []
+    }
+  ]
+}

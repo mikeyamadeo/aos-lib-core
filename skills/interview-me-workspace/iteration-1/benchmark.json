@@ -1,0 +1,137 @@
+{
+  "metadata": {
+    "skill_name": "interview-me",
+    "skill_path": "/Users/mikey/boost-os/plugins/src/core/skills/interview-me/SKILL.md",
+    "executor_model": "claude-opus-4-6",
+    "timestamp": "2026-03-09T19:21:06Z",
+    "evals_run": ["existing-spec-interview", "bare-prompt-interview", "mid-conversation-composability"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_name": "existing-spec-interview",
+      "configuration": "with_skill",
+      "pass_rate": 1.0,
+      "passed": 5,
+      "failed": 0,
+      "total": 5,
+      "time_seconds": 95.1,
+      "tokens": 17977,
+      "expectations": [
+        {"text": "Questions target specific gaps in the spec rather than topics the spec already covers well", "passed": true},
+        {"text": "Questions reference concrete details from the spec (specific phases, mechanisms, or language)", "passed": true},
+        {"text": "Strategy explicitly plans to use AskUserQuestion one at a time", "passed": true},
+        {"text": "At least one question reveals a non-obvious tension or tradeoff", "passed": true},
+        {"text": "Strategy describes adapting follow-up questions based on user answers", "passed": true}
+      ]
+    },
+    {
+      "eval_name": "existing-spec-interview",
+      "configuration": "without_skill",
+      "pass_rate": 0.8,
+      "passed": 4,
+      "failed": 1,
+      "total": 5,
+      "time_seconds": 86.7,
+      "tokens": 16257,
+      "expectations": [
+        {"text": "Questions target specific gaps in the spec rather than topics the spec already covers well", "passed": true},
+        {"text": "Questions reference concrete details from the spec (specific phases, mechanisms, or language)", "passed": true},
+        {"text": "Strategy explicitly plans to use AskUserQuestion one at a time", "passed": false},
+        {"text": "At least one question reveals a non-obvious tension or tradeoff", "passed": true},
+        {"text": "Strategy describes adapting follow-up questions based on user answers", "passed": true}
+      ]
+    },
+    {
+      "eval_name": "bare-prompt-interview",
+      "configuration": "with_skill",
+      "pass_rate": 1.0,
+      "passed": 5,
+      "failed": 0,
+      "total": 5,
+      "time_seconds": 100.1,
+      "tokens": 14822,
+      "expectations": [
+        {"text": "Questions target specific gaps in the prompt rather than restating what was already said", "passed": true},
+        {"text": "Questions use concrete scenarios rather than abstract inquiries", "passed": true},
+        {"text": "Strategy explicitly plans to use AskUserQuestion one at a time", "passed": true},
+        {"text": "At least one question probes an intersection or tension between stated requirements", "passed": true},
+        {"text": "Strategy describes adapting follow-up questions based on user answers", "passed": true}
+      ]
+    },
+    {
+      "eval_name": "bare-prompt-interview",
+      "configuration": "without_skill",
+      "pass_rate": 0.4,
+      "passed": 2,
+      "failed": 3,
+      "total": 5,
+      "time_seconds": 73.9,
+      "tokens": 11731,
+      "expectations": [
+        {"text": "Questions target specific gaps in the prompt rather than restating what was already said", "passed": true},
+        {"text": "Questions use concrete scenarios rather than abstract inquiries", "passed": false},
+        {"text": "Strategy explicitly plans to use AskUserQuestion one at a time", "passed": false},
+        {"text": "At least one question probes an intersection or tension between stated requirements", "passed": false},
+        {"text": "Strategy describes adapting follow-up questions based on user answers", "passed": true}
+      ]
+    },
+    {
+      "eval_name": "mid-conversation-composability",
+      "configuration": "with_skill",
+      "pass_rate": 1.0,
+      "passed": 5,
+      "failed": 0,
+      "total": 5,
+      "time_seconds": 137.9,
+      "tokens": 15124,
+      "expectations": [
+        {"text": "Questions target specific gaps rather than restating the four stated requirements", "passed": true},
+        {"text": "Questions use concrete failure scenarios or edge cases rather than abstract inquiries", "passed": true},
+        {"text": "Strategy explicitly plans to use AskUserQuestion one at a time", "passed": true},
+        {"text": "At least one question surfaces a non-obvious architectural concern", "passed": true},
+        {"text": "Strategy includes a mid-interview checkpoint or summary to redirect the conversation", "passed": true}
+      ]
+    },
+    {
+      "eval_name": "mid-conversation-composability",
+      "configuration": "without_skill",
+      "pass_rate": 0.6,
+      "passed": 3,
+      "failed": 2,
+      "total": 5,
+      "time_seconds": 128.4,
+      "tokens": 28180,
+      "expectations": [
+        {"text": "Questions target specific gaps rather than restating the four stated requirements", "passed": true},
+        {"text": "Questions use concrete failure scenarios or edge cases rather than abstract inquiries", "passed": true},
+        {"text": "Strategy explicitly plans to use AskUserQuestion one at a time", "passed": false},
+        {"text": "At least one question surfaces a non-obvious architectural concern", "passed": true},
+        {"text": "Strategy includes a mid-interview checkpoint or summary to redirect the conversation", "passed": false}
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "mean_pass_rate": 1.0,
+      "mean_time_seconds": 111.0,
+      "mean_tokens": 15974
+    },
+    "without_skill": {
+      "mean_pass_rate": 0.6,
+      "mean_time_seconds": 96.3,
+      "mean_tokens": 18723
+    },
+    "delta": {
+      "pass_rate": "+0.40",
+      "time_seconds": "+14.7",
+      "tokens": "-2749"
+    }
+  },
+  "notes": [
+    "The AskUserQuestion assertion is non-discriminating for with_skill (always passes) since the skill explicitly instructs it. It is discriminating for baselines.",
+    "The baseline for eval 2 (plugin system) used 28K tokens — nearly 2x the with-skill version — because it explored the entire codebase. Despite this extra context, it still missed interview structure elements (checkpoint, one-at-a-time).",
+    "The biggest quality delta is on eval 1 (dotfiles): with-skill questions paint vivid scenarios while baseline asks generic questions. The skill's emphasis on non-obvious, scenario-based questioning had the clearest effect here.",
+    "The mid-interview checkpoint (eval 2, assertion 5) is a skill-specific behavior that never appears in baselines — a genuine structural improvement in interview flow."
+  ]
+}

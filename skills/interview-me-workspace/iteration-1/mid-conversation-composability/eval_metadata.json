@@ -1,0 +1,12 @@
+{
+  "eval_id": 2,
+  "eval_name": "mid-conversation-composability",
+  "prompt": "I've been thinking about adding a plugin system to my app. Plugins would be loaded at runtime and could extend the UI and add new data sources. I want third-party developers to be able to create plugins too. Interview me about this — what am I not thinking about?",
+  "assertions": [
+    "Questions target specific gaps rather than restating the four stated requirements",
+    "Questions use concrete failure scenarios or edge cases rather than abstract inquiries",
+    "Strategy explicitly plans to use AskUserQuestion one at a time",
+    "At least one question surfaces a non-obvious architectural concern (beyond obvious security/sandboxing)",
+    "Strategy includes a mid-interview checkpoint or summary to redirect the conversation"
+  ]
+}
