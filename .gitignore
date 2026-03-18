@@ -5,3 +5,8 @@
 *.swp
 *.swo
 *~
+
+# Eval outputs (regenerable) — keep definitions and benchmark summaries
+skills/*-workspace/iteration-*/*/
+skills/*-workspace/iteration-*/feedback.json
+skills/*-workspace/optimization-log.txt
