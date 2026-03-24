@@ -1,0 +1,42 @@
+{
+  "skill_name": "systems-thinking",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Design a system for a real-time collaborative document editor like Google Docs. It needs to support 10K concurrent users editing the same document, with sub-200ms latency for character-by-character updates. We need conflict resolution and version history.",
+      "expected_output": "A structured system design covering domain boundaries, access patterns, component selection with trade-off reasoning, and system dynamics analysis",
+      "files": [],
+      "assertions": [
+        {"text": "Identifies CRDTs or Operational Transformation as the conflict resolution approach with reasoning for the choice"},
+        {"text": "Contains explicit access pattern analysis — identifies how data will be read and written before choosing components"},
+        {"text": "Names a specific consistency model (eventual, causal, etc.) and justifies why it fits the use case"},
+        {"text": "Identifies at least one feedback loop or system dynamic (e.g., more editors → more conflicts → higher latency)"},
+        {"text": "At least one major decision has an explicit trade-off structure: chose X because Y, accepting Z as consequence"}
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "We have a microservices architecture where every service talks to a shared PostgreSQL database. The user service, billing service, and notification service all read and write to the same users table. Latency is climbing and we're seeing lock contention during peak hours. What's wrong with this design?",
+      "expected_output": "An architecture audit identifying specific failure modes (wrong abstraction boundaries, missing access pattern analysis) with justified improvement recommendations",
+      "files": [],
+      "assertions": [
+        {"text": "Identifies shared database as a domain boundary / abstraction problem, not just a performance issue"},
+        {"text": "References at least 2 distinct failure modes by concept (e.g., wrong boundaries + missing access patterns + unjustified trade-offs)"},
+        {"text": "Recommends decomposition toward per-service data ownership or bounded contexts"},
+        {"text": "Provides concrete reasoning about the lock contention mechanism, not just 'it's bad'"}
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "We're building an event ingestion pipeline that handles ~50K events/sec. Each event is a small JSON blob (~1KB). Consumers need to process events in order per-customer but don't need global ordering. Should we use Kafka or RabbitMQ?",
+      "expected_output": "A focused trade-off analysis grounded in access patterns with a justified recommendation",
+      "files": [],
+      "assertions": [
+        {"text": "Decision is grounded in the specific workload properties (50K/sec, 1KB events, per-customer ordering)"},
+        {"text": "Explicitly states what is being traded off between the two options"},
+        {"text": "Makes a clear recommendation for one option, not 'it depends'"},
+        {"text": "Addresses the per-customer ordering requirement with a concrete mechanism (e.g., partition by customer ID)"}
+      ]
+    }
+  ]
+}
