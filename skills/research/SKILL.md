@@ -18,7 +18,7 @@ Or naturally: "research X", "look into X", "what's the current state of X", etc.
 ## Variables
 
 - **RESEARCH_TOPIC**: `$ARGUMENTS` — the topic to research
-- **OUTPUT_PATH**: `${DEFAULT_AGENT_OUTPUT_PATH}core/` — read `DEFAULT_AGENT_OUTPUT_PATH` from `.env` (see `brain/resources/agent-mental-models/workspace/expertise.yaml` for convention)
+- **OUTPUT_PATH**: `${DEFAULT_AGENT_OUTPUT_PATH}core/` — read `DEFAULT_AGENT_OUTPUT_PATH` from `.env`
 
 Derive `RESEARCH_TOPIC_SLUG` from the topic: lowercase, hyphens for spaces, strip special characters.
 
