@@ -1,0 +1,47 @@
+{
+  "skill_name": "ids",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Our deploy pipeline has failed 4 times this week. Each time it's a different test — sometimes it's the integration suite, sometimes a flaky e2e test, sometimes a timeout. The team keeps re-running the pipeline until it passes. We've been doing this for about 3 weeks now. Can you figure out what's actually going on?",
+      "expected_output": "IDS analysis that digs past 'flaky tests' as the symptom to find a systemic root cause. Should produce a why chain, constraints, and a solution with a named owner.",
+      "files": [],
+      "assertions": [
+        {"name": "has_why_chain", "type": "structural", "description": "Output contains a clear chain of 'why' questions with at least 2 levels of depth"},
+        {"name": "root_cause_one_sentence", "type": "quality", "description": "Root cause is stated in a single, clear sentence"},
+        {"name": "goes_past_flaky_tests", "type": "depth", "description": "Analysis digs deeper than 'tests are flaky' to a systemic cause"},
+        {"name": "names_single_owner", "type": "structural", "description": "Solution names one specific person, not 'the team'"},
+        {"name": "concrete_next_step", "type": "quality", "description": "Solution includes a specific, actionable next step"},
+        {"name": "discuss_shorter_than_identify", "type": "structural", "description": "Discussion section is noticeably shorter than root cause analysis"}
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I keep missing important Slack messages from my team. I've tried turning on notifications, setting up keyword alerts, even checking Slack more often. Nothing works — I still find out about critical things hours late. It's starting to affect my work and my manager noticed. What's the real problem here?",
+      "expected_output": "IDS analysis that goes beyond tooling fixes to identify a process or system-level root cause for why critical information isn't reaching this person.",
+      "files": [],
+      "assertions": [
+        {"name": "has_why_chain", "type": "structural", "description": "Output contains a clear chain of 'why' questions with at least 2 levels of depth"},
+        {"name": "root_cause_one_sentence", "type": "quality", "description": "Root cause is stated in a single, clear sentence"},
+        {"name": "goes_past_notification_settings", "type": "depth", "description": "Analysis goes beyond tooling fixes to a process/system-level root cause"},
+        {"name": "names_single_owner", "type": "structural", "description": "Solution names one specific person as owner"},
+        {"name": "concrete_next_step", "type": "quality", "description": "Solution includes a specific, actionable next step"},
+        {"name": "blames_system_not_person", "type": "quality", "description": "Analysis frames as system/process gap, not personal failing"}
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "We launched a new feature 2 months ago and adoption is at 3%. Product says the feature works fine, engineering says there are no bugs, design says the UX tested well. But nobody's using it. Leadership is asking why we spent a quarter building something nobody wants. Help me root cause this.",
+      "expected_output": "IDS analysis that challenges surface claims and identifies a systemic cause for low adoption rather than blaming any one team.",
+      "files": [],
+      "assertions": [
+        {"name": "has_why_chain", "type": "structural", "description": "Output contains a clear chain of 'why' questions with at least 2 levels of depth"},
+        {"name": "root_cause_one_sentence", "type": "quality", "description": "Root cause is stated in a single, clear sentence"},
+        {"name": "goes_past_surface_claims", "type": "depth", "description": "Analysis challenges the stated claims rather than accepting them"},
+        {"name": "names_single_owner", "type": "structural", "description": "Solution names one specific person, not 'the team' or multiple groups"},
+        {"name": "concrete_next_step", "type": "quality", "description": "Solution includes a specific, actionable next step"},
+        {"name": "systemic_not_blame", "type": "quality", "description": "Analysis identifies systemic cause rather than blaming a team"}
+      ]
+    }
+  ]
+}
