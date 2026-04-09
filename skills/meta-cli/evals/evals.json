@@ -1,0 +1,26 @@
+{
+  "skill_name": "meta-cli",
+  "evals": [
+    {
+      "id": 1,
+      "name": "suntrack-solar-crm",
+      "prompt": "I've got an internal CRM called SunTrack for solar installations. REST API at https://api.suntrack.io/v2, bearer token in env var SUNTRACK_TOKEN. I need to look up installs by ID, look up leads by ID, list installs by status and date range, and eventually pull all installs updated since a date into JSONL for an orchestrator. It paginates with cursor tokens in the response body. Build me a connector skill for this.",
+      "expected_output": "Full bun/TS connector skill at suntrack/ with SKILL.md, cookbook/ (one file per command), references/setup.md, src/cli.ts + client.ts + types.ts, package.json, tsconfig.json. CLI should be runnable (stub returns JSON error) and commands should be: get-install, get-lead, list-installs, fetch-installs. Should pick bun/TS because of cursor pagination + JSONL batch.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "acme-billing",
+      "prompt": "Make a connector skill for the Acme Billing API. Header auth 'x-api-key: <key>', env var ACME_API_KEY. Base URL https://api.acme-billing.com/v1. I want get-invoice <id>, list-invoices --customer <id>, and get-customer <id>. No batch yet. Call the skill acme-billing.",
+      "expected_output": "Bun/TS connector skill at acme-billing/ with SKILL.md, cookbook/ (3 files for get-invoice, list-invoices, get-customer), references/setup.md, src/cli.ts + client.ts + types.ts using x-api-key header (not Bearer). Package.json + tsconfig.json. CLI must be runnable (stubs return JSON errors).",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "status-probe-bash",
+      "prompt": "Quick skill for our internal status API at https://status.internal/. Three endpoints: GET /health, GET /services, GET /incidents. Auth is a query param ?key=<token> from env var STATUS_KEY. No pagination, no writes. Just give me a thin CLI wrapper. Call it status-probe.",
+      "expected_output": "Bash connector skill at status-probe/ with SKILL.md, cookbook/ (3 files for health, services, incidents), references/setup.md, scripts/status-probe (executable) + scripts/lib/env.sh + scripts/lib/api.sh + scripts/commands/{health,services,incidents}.sh. Should pick bash because it's 3 read-only endpoints, no pagination, no batch. Query param auth (not Bearer).",
+      "files": []
+    }
+  ]
+}
