@@ -29,21 +29,16 @@ Initialize the session (one-time per task):
 
 ```bash
 source .claude/skills/browse-cdp/scripts/chrome-cdp.sh
-agent_browser_reap_stale     # kill any orphans from prior crashed runs in THIS workspace
-cdp_state_load               # rehydrate state from prior block, if any
-if [[ -z "${CDP_PORT:-}" ]] || ! curl -s --max-time 2 "http://localhost:${CDP_PORT}/json/version" >/dev/null; then
-  chrome_cdp_start           # spawns Chrome, sets CDP_PORT / CDP_PID / CDP_USER_DATA
-  cdp_state_save
-fi
-agent_browser_ensure         # derives deterministic CDP_SESSION="cdp-<workspace>-<port>", persists, warms daemon
+chrome_cdp_init              # locked: reaps orphans, starts Chrome if needed, derives & persists CDP_SESSION
 echo "Using CDP_PORT=${CDP_PORT} CDP_SESSION=${CDP_SESSION}"
 ```
+
+`chrome_cdp_init` is the orchestrator — it calls `agent_browser_reap_stale`, `cdp_state_load`, `chrome_cdp_start` (if needed), and `agent_browser_ensure` under an mkdir-based lock so two same-workspace runs starting concurrently can't race-overwrite each other's state. If you need finer control, the individual functions are still exposed.
 
 Verify connectivity:
 
 ```bash
-source .claude/skills/browse-cdp/scripts/chrome-cdp.sh
-cdp_state_load
+source .claude/skills/browse-cdp/scripts/chrome-cdp.sh && cdp_state_load
 agent-browser --session "$CDP_SESSION" --cdp "$CDP_PORT" snapshot
 ```
 
