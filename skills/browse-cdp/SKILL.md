@@ -1,5 +1,9 @@
 ---
 name: browse-cdp
+version: 1.0.0
+author: '@mikeyamadeo'
+allowed-tools: [Bash, Read]
+requires: [bin:agent-browser, bin:node]
 description: >-
   Use when you need to navigate a website via browser automation — filling forms,
   clicking buttons, extracting data from pages, or handling CAPTCHAs. Triggers:
