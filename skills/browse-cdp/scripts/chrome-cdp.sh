@@ -359,10 +359,18 @@ agent_browser_close() {
 agent_browser_reap_stale() {
   local our_prefix
   our_prefix="cdp-$(cdp_workspace_key)-"
-  local active_session=""
-  if [[ -r "$(cdp_state_path)" ]]; then
-    active_session=$(grep -E '^CDP_SESSION=' "$(cdp_state_path)" 2>/dev/null | cut -d= -f2- | tr -d '"')
-  fi
+  # The "active session" we protect from reaping is only valid if the Chrome
+  # process recorded in state is still alive. Otherwise the state file is
+  # stale (crashed shell, killed Chrome) and the named daemon is an orphan.
+  local active_session
+  active_session=$(
+    CDP_SESSION=""
+    CDP_PID=""
+    [[ -r "$(cdp_state_path)" ]] && source "$(cdp_state_path)" 2>/dev/null
+    if [[ -n "${CDP_PID:-}" ]] && kill -0 "$CDP_PID" 2>/dev/null; then
+      printf '%s' "${CDP_SESSION:-}"
+    fi
+  )
   shopt -s nullglob
   local pidfile
   for pidfile in "${HOME}"/.agent-browser/*.pid; do
