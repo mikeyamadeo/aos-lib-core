@@ -23,33 +23,26 @@ Navigate websites using real Chrome via Chrome DevTools Protocol. Uses agent-bro
 
 ## Phase 1: Pre-flight
 
-Check if Chrome is already running on a CDP port:
+> **Execution model:** every ```` ```bash ```` block in this skill runs in a SEPARATE shell. Nothing in shell state — variables, `trap`, exported env — survives between blocks. State is persisted to `/tmp/claude-cdp/${workspace_key}.env` and re-loaded at the top of every block. Always start a block with `source ... && cdp_state_load` before using `agent-browser`.
 
-```bash
-curl -s --max-time 2 http://localhost:${CDP_PORT:-9222}/json/version
-```
-
-If it responds, reuse the existing session. If not, clean up any zombie instances from prior sessions, then start Chrome:
+Initialize the session (one-time per task):
 
 ```bash
 source .claude/skills/browse-cdp/scripts/chrome-cdp.sh
-chrome_cdp_cleanup
-chrome_cdp_start
+chrome_cdp_init              # locked: reaps orphans, starts Chrome if needed, derives & persists CDP_SESSION
+echo "Using CDP_PORT=${CDP_PORT} CDP_SESSION=${CDP_SESSION}"
 ```
 
-After start, `$CDP_PORT` and `$CDP_FLAG` are set. Set a session name to isolate @ref mappings from other agents that may be running concurrently:
-
-```bash
-export CDP_SESSION="browse-$$"
-```
+`chrome_cdp_init` is the orchestrator — it calls `agent_browser_reap_stale`, `cdp_state_load`, `chrome_cdp_start` (if needed), and `agent_browser_ensure` under an mkdir-based lock so two same-workspace runs starting concurrently can't race-overwrite each other's state. If you need finer control, the individual functions are still exposed.
 
 Verify connectivity:
 
 ```bash
-agent-browser --session ${CDP_SESSION} --cdp ${CDP_PORT} snapshot
+source .claude/skills/browse-cdp/scripts/chrome-cdp.sh && cdp_state_load
+agent-browser --session "$CDP_SESSION" --cdp "$CDP_PORT" snapshot
 ```
 
-Use `--session ${CDP_SESSION} --cdp ${CDP_PORT}` on every agent-browser command for the rest of this session. The session isolates your @ref namespace — without it, parallel agents on different CDP ports corrupt each other's refs.
+The session name is deterministic per workspace (`cdp-<workspace_hash>-<port>`), so any block that calls `cdp_state_load` reattaches to the same daemon. Parallel agents in different workspaces get distinct hashes → distinct sessions → no `@ref` collisions.
 
 ### Degradation
 
@@ -61,6 +54,8 @@ Use `--session ${CDP_SESSION} --cdp ${CDP_PORT}` on every agent-browser command 
 | ANTHROPIC_API_KEY not set | Vision CAPTCHA solver unavailable, audio only |
 
 ## Phase 2: Navigate + Interact
+
+> **Every block must start with `source .claude/skills/browse-cdp/scripts/chrome-cdp.sh && cdp_state_load`** before running `agent-browser`. The examples below omit the boilerplate for readability — put it at the top of each block you actually run.
 
 ### Core Loop
 
@@ -179,22 +174,41 @@ See `references/captcha-patterns.md` for detailed recognition patterns.
 
 ## Phase 4: Cleanup
 
-**Leave Chrome running** after completing the task — other skills may reuse the session.
+Two independent decisions: **always close the agent-browser daemon**; **optionally stop Chrome**.
 
-Only stop Chrome when explicitly asked:
+### Mandatory — close the agent-browser daemon at task end
 
-```bash
-agent-browser --session ${CDP_SESSION} close
-source .claude/skills/browse-cdp/scripts/chrome-cdp.sh
-chrome_cdp_stop
-```
-
-To clean up zombie Chrome instances from crashed sessions:
+The daemon is a long-running per-session node process. Every skill run that omits the close leaks one. Always call this in the final block:
 
 ```bash
 source .claude/skills/browse-cdp/scripts/chrome-cdp.sh
-chrome_cdp_cleanup
+cdp_state_load
+agent_browser_close
 ```
+
+`agent_browser_close` is safe to call even if the daemon is already gone (no-op). It tries graceful close first, then pid-based fallback if the daemon is wedged.
+
+> Note: cross-block `@ref` state was already documented as unsupported (see Phase 2 — "prefer eval"). Closing the daemon between tasks is consistent with that.
+
+### Optional — stop Chrome
+
+Default: leave Chrome running between skill invocations so the next task reuses the window. To explicitly stop the Chrome instance owned by THIS workspace (safe across parallel agents):
+
+```bash
+source .claude/skills/browse-cdp/scripts/chrome-cdp.sh
+chrome_cdp_stop_owned
+```
+
+### Reaping orphans from crashed prior runs
+
+`agent_browser_reap_stale` (called in Phase 1) handles agent-browser daemons. For dead-but-recorded Chrome state files:
+
+```bash
+source .claude/skills/browse-cdp/scripts/chrome-cdp.sh
+chrome_cdp_cleanup           # scoped: only state files whose Chrome PID is dead
+```
+
+The legacy global scan (ports 9222–9241) is opt-in via `chrome_cdp_cleanup --force` and prints a warning — it can clobber other agents' Chrome instances. Avoid unless explicitly needed.
 
 ## Structured Failure Reasons
 
